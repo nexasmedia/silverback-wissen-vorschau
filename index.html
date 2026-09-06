@@ -1,0 +1,1807 @@
+<!doctype html>
+<html lang="de" data-theme="dark">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex" />
+<meta name="googlebot" content="noindex, nofollow" />
+<title>Silverback Wissen · Vorschau</title>
+<meta name="description" content="Interne Vorschau der Wissensdatenbank für Silverback. Nicht für die Veröffentlichung bestimmt." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+/* =========================================================================
+   Silverback Wissen — Vorschau (NEXAS Media)
+   CI aus websites/src/styles/v2.css: Blau #5B92F7 auf #060818, Geist + Inter
+   ========================================================================= */
+
+:root {
+  --font-display: "Geist", "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-body: "Inter", "Geist", -apple-system, BlinkMacSystemFont, sans-serif;
+  --blue-50:  #DCE9FF;
+  --blue-100: #B6CDFC;
+  --blue-200: #8FB5FC;
+  --blue-300: #6DA1FA;
+  --blue-400: #5B92F7;
+  --blue-500: #4A82E8;
+  --blue-600: #3D6DC9;
+  --blue-700: #2D5FBA;
+  --radius: 14px;
+  --radius-sm: 10px;
+  --maxw: 1320px;
+  --header-h: 68px;
+}
+
+/* Dunkel, Standard */
+html[data-theme="dark"] {
+  --bg: #060818;
+  --bg-2: #0A0D22;
+  --bg-3: #0F1330;
+  --bg-card: #0B0F26;
+  --bg-elevated: #11163A;
+  --line: rgba(255,255,255,0.08);
+  --line-strong: rgba(255,255,255,0.16);
+  --text: #FFFFFF;
+  --text-soft: rgba(255,255,255,0.78);
+  --text-muted: rgba(255,255,255,0.58);
+  --accent: var(--blue-300);
+  --accent-strong: var(--blue-400);
+  --hover: rgba(255,255,255,0.05);
+  --grid-line: rgba(255,255,255,0.028);
+  --glow-a: rgba(91,146,247,0.20);
+  --glow-b: rgba(91,146,247,0.07);
+  --btn-text: #060818;
+  --code-bg: rgba(255,255,255,0.05);
+  --shadow: 0 24px 60px rgba(0,0,0,0.5);
+}
+
+/* Hell */
+html[data-theme="light"] {
+  --bg: #FFFFFF;
+  --bg-2: #F5F7FC;
+  --bg-3: #EDF1FA;
+  --bg-card: #FFFFFF;
+  --bg-elevated: #F5F7FC;
+  --line: rgba(9,16,40,0.10);
+  --line-strong: rgba(9,16,40,0.18);
+  --text: #0A0F26;
+  --text-soft: rgba(10,15,38,0.78);
+  --text-muted: rgba(10,15,38,0.56);
+  --accent: var(--blue-600);
+  --accent-strong: var(--blue-500);
+  --hover: rgba(9,16,40,0.04);
+  --grid-line: rgba(9,16,40,0.035);
+  --glow-a: rgba(91,146,247,0.14);
+  --glow-b: rgba(91,146,247,0.05);
+  --btn-text: #FFFFFF;
+  --code-bg: rgba(9,16,40,0.05);
+  --shadow: 0 20px 50px rgba(9,16,40,0.10);
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; text-decoration: none; }
+button { font: inherit; cursor: pointer; }
+
+/* Rasterhintergrund wie auf der Website */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image:
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+  background-size: 64px 64px;
+}
+
+/* ---------- Vorschau-Band ---------- */
+.preview-bar {
+  position: relative;
+  z-index: 60;
+  background: linear-gradient(90deg, var(--blue-700), var(--blue-500));
+  color: #fff;
+  font-size: 12.5px;
+  letter-spacing: 0.02em;
+  text-align: center;
+  padding: 7px 16px;
+}
+.preview-bar strong { font-weight: 600; }
+
+/* ---------- Kopfzeile ---------- */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  height: var(--header-h);
+  display: flex;
+  align-items: center;
+  background: color-mix(in srgb, var(--bg) 82%, transparent);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--line);
+}
+.header-inner {
+  width: 100%;
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  gap: 22px;
+}
+.brand { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
+.brand img { height: 30px; width: auto; display: block; }
+html[data-theme="dark"] .brand .logo-navy { display: none; }
+html[data-theme="light"] .brand .logo-white { display: none; }
+.brand-sep {
+  width: 1px; height: 22px; background: var(--line-strong);
+}
+.brand-tag {
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.nav { display: flex; align-items: center; gap: 4px; margin-left: 10px; }
+.nav a {
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 14.5px;
+  color: var(--text-soft);
+  transition: background .15s, color .15s;
+}
+.nav a:hover { background: var(--hover); color: var(--text); }
+.nav a.is-active { color: var(--accent); font-weight: 600; }
+
+.header-right { margin-left: auto; display: flex; align-items: center; gap: 10px; }
+
+.searchbox {
+  display: flex; align-items: center; gap: 8px;
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 7px 12px;
+  width: 250px;
+  color: var(--text-muted);
+  transition: border-color .15s;
+}
+.searchbox:hover { border-color: var(--line-strong); }
+.searchbox input {
+  border: 0; outline: 0; background: transparent; color: var(--text);
+  font: inherit; font-size: 14px; width: 100%;
+}
+.searchbox input::placeholder { color: var(--text-muted); }
+.kbd {
+  font-size: 11px; padding: 2px 6px; border-radius: 5px;
+  border: 1px solid var(--line-strong); color: var(--text-muted);
+  flex-shrink: 0;
+}
+
+.icon-btn {
+  width: 38px; height: 38px;
+  display: grid; place-items: center;
+  border-radius: 9px;
+  border: 1px solid var(--line);
+  background: var(--bg-card);
+  color: var(--text-soft);
+}
+.icon-btn:hover { border-color: var(--line-strong); color: var(--text); }
+
+.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 9px 18px;
+  border-radius: 10px;
+  font-size: 14.5px; font-weight: 600;
+  border: 1px solid transparent;
+  transition: transform .15s, box-shadow .15s, background .15s;
+}
+.btn-primary {
+  background: linear-gradient(135deg, var(--blue-400), var(--blue-600));
+  color: #fff;
+  box-shadow: 0 6px 22px var(--glow-a);
+}
+.btn-primary:hover { transform: translateY(-1px); box-shadow: 0 10px 28px var(--glow-a); }
+.btn-ghost { border-color: var(--line-strong); color: var(--text); background: var(--bg-card); }
+.btn-ghost:hover { background: var(--hover); }
+
+.badge-intern {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: 11.5px; font-weight: 600; letter-spacing: 0.02em;
+  padding: 2px 8px; border-radius: 999px;
+  background: color-mix(in srgb, var(--blue-400) 18%, transparent);
+  color: var(--accent);
+  border: 1px solid color-mix(in srgb, var(--blue-400) 32%, transparent);
+}
+
+/* ---------- Grundgerüst ---------- */
+main { position: relative; z-index: 1; }
+.wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
+
+/* ---------- Docs-Startseite ---------- */
+.hero {
+  position: relative;
+  padding: 74px 0 52px;
+  text-align: center;
+  overflow: hidden;
+}
+.hero::after {
+  content: "";
+  position: absolute;
+  top: -180px; left: 50%; transform: translateX(-50%);
+  width: 900px; height: 460px;
+  background: radial-gradient(ellipse at center, var(--glow-a), var(--glow-b) 45%, transparent 70%);
+  pointer-events: none;
+}
+.hero > * { position: relative; z-index: 1; }
+.eyebrow {
+  font-size: 12.5px; font-weight: 600; letter-spacing: 0.16em;
+  text-transform: uppercase; color: var(--accent);
+  margin-bottom: 16px;
+}
+h1.hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(34px, 5vw, 52px);
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  font-weight: 600;
+  margin: 0 0 16px;
+}
+.hero-sub {
+  font-size: 18px; color: var(--text-soft);
+  max-width: 660px; margin: 0 auto 34px;
+}
+.hero-search {
+  max-width: 640px; margin: 0 auto;
+  display: flex; align-items: center; gap: 12px;
+  background: var(--bg-card);
+  border: 1px solid var(--line-strong);
+  border-radius: 14px;
+  padding: 14px 20px;
+  box-shadow: var(--shadow);
+}
+.hero-search input {
+  border: 0; outline: 0; background: transparent;
+  color: var(--text); font: inherit; font-size: 16px; width: 100%;
+}
+.hero-search input::placeholder { color: var(--text-muted); }
+
+/* Vier Kacheln */
+.tiles {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+  padding: 12px 0 64px;
+}
+.tile {
+  display: block;
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 26px 24px 24px;
+  transition: transform .18s, border-color .18s, box-shadow .18s;
+  position: relative;
+  overflow: hidden;
+}
+.tile::before {
+  content: "";
+  position: absolute; inset: 0 0 auto 0; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--blue-400), transparent);
+  opacity: 0; transition: opacity .18s;
+}
+.tile:hover {
+  transform: translateY(-3px);
+  border-color: color-mix(in srgb, var(--blue-400) 40%, transparent);
+  box-shadow: 0 18px 44px var(--glow-b);
+}
+.tile:hover::before { opacity: 1; }
+.tile-icon {
+  width: 44px; height: 44px; border-radius: 11px;
+  display: grid; place-items: center;
+  background: color-mix(in srgb, var(--blue-400) 14%, transparent);
+  color: var(--accent);
+  margin-bottom: 16px;
+}
+.tile h3 {
+  font-family: var(--font-display);
+  font-size: 19px; font-weight: 600; letter-spacing: -0.01em;
+  margin: 0 0 8px;
+}
+.tile p { margin: 0 0 16px; font-size: 14.5px; color: var(--text-soft); line-height: 1.55; }
+.tile-meta {
+  font-size: 13px; color: var(--accent); font-weight: 600;
+  display: flex; align-items: center; gap: 6px;
+}
+
+/* Abschnitte auf der Startseite */
+.section { padding: 0 0 64px; }
+.section-head {
+  display: flex; align-items: baseline; justify-content: space-between;
+  gap: 20px; margin-bottom: 22px;
+}
+.section-head h2 {
+  font-family: var(--font-display);
+  font-size: 25px; font-weight: 600; letter-spacing: -0.02em; margin: 0;
+}
+.section-head p { margin: 6px 0 0; color: var(--text-soft); font-size: 15px; }
+.section-link { font-size: 14px; color: var(--accent); font-weight: 600; white-space: nowrap; }
+
+.news-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+.news-card {
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 22px;
+  transition: border-color .18s, transform .18s;
+}
+.news-card:hover { border-color: var(--line-strong); transform: translateY(-2px); }
+.news-kat {
+  font-size: 11.5px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--accent); margin-bottom: 10px;
+}
+.news-card h4 {
+  font-family: var(--font-display);
+  font-size: 17px; font-weight: 600; margin: 0 0 8px; line-height: 1.35;
+}
+.news-card p { margin: 0 0 14px; font-size: 14px; color: var(--text-soft); }
+.news-date { font-size: 13px; color: var(--text-muted); }
+
+.split { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 20px; }
+.panel {
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 28px;
+}
+.panel h3 {
+  font-family: var(--font-display);
+  font-size: 20px; font-weight: 600; margin: 0 0 10px; letter-spacing: -0.01em;
+}
+.panel p { color: var(--text-soft); font-size: 15px; margin: 0 0 18px; }
+.panel ul { margin: 0 0 20px; padding-left: 18px; color: var(--text-soft); font-size: 14.5px; }
+.panel li { margin-bottom: 7px; }
+
+/* ---------- Docs-Layout ---------- */
+.docs {
+  display: grid;
+  grid-template-columns: 268px minmax(0, 1fr) 232px;
+  gap: 44px;
+  align-items: start;
+  padding: 34px 0 90px;
+}
+.sidebar {
+  position: sticky;
+  top: calc(var(--header-h) + 22px);
+  max-height: calc(100vh - var(--header-h) - 44px);
+  overflow-y: auto;
+  padding-right: 8px;
+}
+.sb-group { margin-bottom: 26px; }
+.sb-group > .sb-title {
+  font-size: 11.5px; font-weight: 700; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--text-muted);
+  margin: 0 0 10px; padding-left: 12px;
+  display: flex; align-items: center; gap: 7px;
+}
+.sb-link {
+  display: flex; align-items: center; justify-content: space-between; gap: 8px;
+  padding: 7px 12px;
+  border-radius: 8px;
+  font-size: 14.5px;
+  color: var(--text-soft);
+  border-left: 2px solid transparent;
+  transition: background .14s, color .14s;
+}
+.sb-link:hover { background: var(--hover); color: var(--text); }
+.sb-link.is-active {
+  background: color-mix(in srgb, var(--blue-400) 12%, transparent);
+  color: var(--accent);
+  font-weight: 600;
+  border-left-color: var(--blue-400);
+}
+.sb-lock { opacity: 0.75; flex-shrink: 0; }
+
+.article { min-width: 0; }
+.breadcrumb {
+  font-size: 13.5px; color: var(--text-muted);
+  display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+.breadcrumb a:hover { color: var(--accent); }
+.article h1 {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 3.6vw, 38px);
+  line-height: 1.18; letter-spacing: -0.025em; font-weight: 600;
+  margin: 0 0 12px;
+}
+.article-lead { font-size: 17.5px; color: var(--text-soft); margin: 0 0 22px; }
+.article-meta {
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  padding-bottom: 22px; margin-bottom: 30px;
+  border-bottom: 1px solid var(--line);
+  font-size: 13.5px; color: var(--text-muted);
+}
+.article h2 {
+  font-family: var(--font-display);
+  font-size: 24px; font-weight: 600; letter-spacing: -0.018em;
+  margin: 42px 0 14px; scroll-margin-top: calc(var(--header-h) + 22px);
+}
+.article h3 {
+  font-family: var(--font-display);
+  font-size: 18.5px; font-weight: 600; margin: 30px 0 10px;
+  scroll-margin-top: calc(var(--header-h) + 22px);
+}
+.article p { margin: 0 0 16px; color: var(--text-soft); }
+.article ul, .article ol { margin: 0 0 18px; padding-left: 22px; color: var(--text-soft); }
+.article li { margin-bottom: 8px; }
+.article strong { color: var(--text); font-weight: 600; }
+.article a.inline { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+
+.callout {
+  border: 1px solid var(--line-strong);
+  border-left: 3px solid var(--blue-400);
+  background: var(--bg-2);
+  border-radius: var(--radius-sm);
+  padding: 18px 22px;
+  margin: 26px 0;
+}
+.callout .callout-title {
+  font-family: var(--font-display);
+  font-weight: 600; font-size: 15px; margin-bottom: 6px;
+  display: flex; align-items: center; gap: 8px;
+}
+.callout p:last-child { margin-bottom: 0; }
+.callout.warn { border-left-color: #E8B04B; }
+.callout.warn .callout-title { color: #E8B04B; }
+
+.qa {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--bg-card);
+  padding: 18px 22px;
+  margin-bottom: 12px;
+}
+.qa .q {
+  font-family: var(--font-display);
+  font-weight: 600; font-size: 15.5px; margin-bottom: 8px;
+}
+.qa p { margin: 0; font-size: 14.5px; }
+
+.table-wrap { overflow-x: auto; margin: 0 0 22px; }
+table {
+  width: 100%; border-collapse: collapse; font-size: 14.5px;
+  border: 1px solid var(--line); border-radius: var(--radius-sm); overflow: hidden;
+}
+th, td { text-align: left; padding: 11px 14px; border-bottom: 1px solid var(--line); }
+th { background: var(--bg-2); font-weight: 600; color: var(--text); font-size: 13.5px; }
+td { color: var(--text-soft); }
+tr:last-child td { border-bottom: 0; }
+
+.toc { position: sticky; top: calc(var(--header-h) + 22px); font-size: 13.5px; }
+.toc-title {
+  font-size: 11.5px; font-weight: 700; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--text-muted); margin-bottom: 12px;
+}
+.toc a {
+  display: block; padding: 5px 0 5px 12px;
+  border-left: 2px solid var(--line);
+  color: var(--text-muted);
+}
+.toc a:hover { color: var(--accent); border-left-color: var(--blue-400); }
+.toc a.lvl3 { padding-left: 24px; font-size: 13px; }
+
+.article-nav {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+  margin-top: 54px; padding-top: 28px; border-top: 1px solid var(--line);
+}
+.article-nav a {
+  border: 1px solid var(--line); border-radius: var(--radius-sm);
+  padding: 16px 18px; transition: border-color .15s;
+}
+.article-nav a:hover { border-color: var(--line-strong); }
+.article-nav .dir { font-size: 12.5px; color: var(--text-muted); margin-bottom: 4px; }
+.article-nav .ttl { font-weight: 600; font-size: 15px; }
+.article-nav .right { text-align: right; }
+
+/* ---------- Kategorieübersicht ---------- */
+.kat-head { padding: 46px 0 30px; }
+.kat-head h1 {
+  font-family: var(--font-display);
+  font-size: clamp(30px, 4vw, 42px); font-weight: 600;
+  letter-spacing: -0.025em; margin: 0 0 12px;
+}
+.kat-head p { font-size: 17.5px; color: var(--text-soft); max-width: 680px; margin: 0; }
+.kat-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; padding-bottom: 80px; }
+.kat-card {
+  background: var(--bg-card); border: 1px solid var(--line);
+  border-radius: var(--radius); padding: 22px 24px;
+  transition: border-color .18s, transform .18s;
+}
+.kat-card:hover { border-color: color-mix(in srgb, var(--blue-400) 40%, transparent); transform: translateY(-2px); }
+.kat-card h4 {
+  font-family: var(--font-display); font-size: 17.5px; font-weight: 600;
+  margin: 0 0 7px; display: flex; align-items: center; gap: 9px;
+}
+.kat-card p { margin: 0; font-size: 14.5px; color: var(--text-soft); }
+
+/* ---------- Portal ---------- */
+.portal-wrap {
+  min-height: calc(100vh - var(--header-h) - 32px);
+  display: grid; place-items: center;
+  padding: 60px 24px 90px;
+}
+.login-card {
+  width: 100%; max-width: 460px;
+  background: var(--bg-card);
+  border: 1px solid var(--line-strong);
+  border-radius: 18px;
+  padding: 38px 36px;
+  box-shadow: var(--shadow);
+}
+.login-card h1 {
+  font-family: var(--font-display);
+  font-size: 27px; font-weight: 600; letter-spacing: -0.02em; margin: 0 0 8px;
+}
+.login-card > p.sub { color: var(--text-soft); font-size: 15px; margin: 0 0 26px; }
+.field { margin-bottom: 16px; }
+.field label {
+  display: block; font-size: 13.5px; font-weight: 600;
+  margin-bottom: 7px; color: var(--text);
+}
+.field input {
+  width: 100%; padding: 12px 14px;
+  background: var(--bg-2);
+  border: 1px solid var(--line-strong);
+  border-radius: 10px;
+  color: var(--text); font: inherit; font-size: 15px;
+  outline: none; transition: border-color .15s;
+}
+.field input:focus { border-color: var(--blue-400); }
+.field .hint { font-size: 12.5px; color: var(--text-muted); margin-top: 6px; }
+.login-error {
+  display: none;
+  background: color-mix(in srgb, #E8574B 14%, transparent);
+  border: 1px solid color-mix(in srgb, #E8574B 34%, transparent);
+  color: #F0938A;
+  border-radius: 9px; padding: 11px 14px; font-size: 14px; margin-bottom: 16px;
+}
+.login-error.show { display: block; }
+.login-card .btn { width: 100%; justify-content: center; margin-top: 6px; }
+.login-note {
+  margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--line);
+  font-size: 13px; color: var(--text-muted);
+}
+
+.portal-head {
+  padding: 42px 0 26px;
+  display: flex; align-items: flex-start; justify-content: space-between; gap: 24px; flex-wrap: wrap;
+}
+.portal-head h1 {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 3.6vw, 38px); font-weight: 600;
+  letter-spacing: -0.025em; margin: 0 0 10px;
+}
+.portal-head p { color: var(--text-soft); margin: 0; font-size: 16px; }
+.user-chip {
+  display: flex; align-items: center; gap: 11px;
+  background: var(--bg-card); border: 1px solid var(--line);
+  border-radius: 12px; padding: 10px 14px;
+}
+.avatar {
+  width: 34px; height: 34px; border-radius: 9px;
+  display: grid; place-items: center; font-size: 13px; font-weight: 700;
+  background: linear-gradient(135deg, var(--blue-400), var(--blue-700));
+  color: #fff;
+}
+.user-chip .u-mail { font-size: 13.5px; }
+.user-chip .u-rolle { font-size: 12px; color: var(--text-muted); }
+
+/* ---------- Suche ---------- */
+.search-results { padding: 40px 0 80px; }
+.search-results h1 {
+  font-family: var(--font-display); font-size: 30px; font-weight: 600;
+  letter-spacing: -0.02em; margin: 0 0 8px;
+}
+.search-results > p.count { color: var(--text-muted); margin: 0 0 28px; font-size: 15px; }
+.result {
+  display: block; padding: 18px 0; border-bottom: 1px solid var(--line);
+}
+.result:hover .r-title { color: var(--accent); }
+.r-path { font-size: 12.5px; color: var(--text-muted); margin-bottom: 5px; }
+.r-title { font-family: var(--font-display); font-size: 17px; font-weight: 600; margin-bottom: 5px; }
+.r-text { font-size: 14.5px; color: var(--text-soft); margin: 0; }
+mark { background: color-mix(in srgb, var(--blue-400) 32%, transparent); color: var(--text); border-radius: 3px; padding: 0 2px; }
+
+/* ---------- Fußzeile ---------- */
+.footer {
+  border-top: 1px solid var(--line);
+  background: var(--bg-2);
+  position: relative; z-index: 1;
+  padding: 40px 0 34px;
+}
+.footer-inner {
+  max-width: var(--maxw); margin: 0 auto; padding: 0 24px;
+  display: flex; justify-content: space-between; gap: 24px; flex-wrap: wrap;
+  font-size: 13.5px; color: var(--text-muted);
+}
+.footer a:hover { color: var(--accent); }
+.footer-links { display: flex; gap: 18px; flex-wrap: wrap; }
+
+/* ---------- Responsiv ---------- */
+@media (max-width: 1100px) {
+  .docs { grid-template-columns: 240px minmax(0,1fr); }
+  .toc { display: none; }
+  .tiles { grid-template-columns: repeat(2, 1fr); }
+  .news-grid { grid-template-columns: 1fr 1fr; }
+  .nav { display: none; }
+  .searchbox { width: 190px; }
+}
+@media (max-width: 780px) {
+  .docs { grid-template-columns: 1fr; gap: 26px; }
+  .sidebar {
+    position: static; max-height: none;
+    border-bottom: 1px solid var(--line); padding-bottom: 18px;
+  }
+  .tiles, .news-grid, .split, .kat-grid, .article-nav { grid-template-columns: 1fr; }
+  .searchbox { display: none; }
+  .header-inner { gap: 12px; }
+  .brand-sep, .brand-tag { display: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="preview-bar">
+  <strong>Vorschau für Silverback</strong> · Entwurf NEXAS Media, Stand 06.09.2026 · Inhalte sind Beispieltexte aus der vorhandenen Wissensbasis und noch nicht freigegeben
+</div>
+
+<header class="header">
+  <div class="header-inner">
+    <a class="brand" href="#/">
+      <img class="logo-white" src="logo-white.svg" alt="Silverback ONE Finance" />
+      <img class="logo-navy" src="logo-navy.svg" alt="Silverback ONE Finance" />
+      <span class="brand-sep"></span>
+      <span class="brand-tag">Wissen</span>
+    </a>
+
+    <nav class="nav" id="mainnav">
+      <a href="#/ueber-uns">Über uns</a>
+      <a href="#/silverback-one">Silverback ONE</a>
+      <a href="#/news">News</a>
+      <a href="#/" data-nav="wissen">Wissen</a>
+    </nav>
+
+    <div class="header-right">
+      <form class="searchbox" id="headersearch">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <input type="search" placeholder="Wissen durchsuchen" aria-label="Wissen durchsuchen" />
+        <span class="kbd">/</span>
+      </form>
+      <button class="icon-btn" id="themebtn" title="Hell und dunkel wechseln" aria-label="Hell und dunkel wechseln">
+        <svg class="ic-moon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg>
+      </button>
+      <a class="btn btn-primary" href="#/portal" id="portalbtn">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+        Portal
+      </a>
+    </div>
+  </div>
+</header>
+
+<main id="app"></main>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div>
+      SAI Silverback Group GmbH · Oberursel · Vorschau ohne Freigabe
+    </div>
+    <div class="footer-links">
+      <a href="#/">Wissen</a>
+      <a href="#/kat/allgemeine-informationen">Allgemeine Informationen</a>
+      <a href="#/portal">Portal</a>
+      <span>Nicht für Suchmaschinen freigegeben</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* =========================================================================
+   Daten
+   Struktur wie bei einer Docs-Seite: vier öffentliche Bereiche, dazu die
+   Allgemeinen Informationen und ein interner Bereich hinter der Anmeldung.
+   ========================================================================= */
+
+const ICONS = {
+  start: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5 19 8 8l11-3-3 11-11 3Z"/><path d="m10 14 4-4"/></svg>',
+  produkte: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 3 3 7.5 12 12l9-4.5L12 3Z"/><path d="m3 12 9 4.5L21 12"/><path d="m3 16.5 9 4.5 9-4.5"/></svg>',
+  plattform: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg>',
+  security: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 3 5 6v5.5c0 4.3 2.9 8.2 7 9.5 4.1-1.3 7-5.2 7-9.5V6l-7-3Z"/><path d="m9.5 12 1.8 1.8 3.4-3.5"/></svg>',
+  info: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg>',
+  lock: '<svg class="sb-lock" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>'
+};
+
+const KATEGORIEN = [
+  {
+    id: 'erste-schritte',
+    titel: 'Erste Schritte',
+    icon: 'start',
+    kurz: 'Der Einstieg in Silverback ONE, vom ersten Zugang bis zur vollständigen Vermögensübersicht.',
+    lead: 'Alles, was am Anfang wichtig ist. Der Weg von der ersten Anmeldung bis zu dem Punkt, an dem Ihr privates Vermögen vollständig und aktuell an einem Ort liegt.'
+  },
+  {
+    id: 'produkte',
+    titel: 'Produkte',
+    icon: 'produkte',
+    kurz: 'Silverback ONE Finance, Energy und Health sowie die Markenarchitektur der SAI Silverback Group.',
+    lead: 'Die Sparten der SAI Silverback Group und ihre Leistungen im Überblick. Silverback ONE Finance ist der Ausgangspunkt, Energy und Health folgen dem gleichen Grundgedanken.'
+  },
+  {
+    id: 'plattform',
+    titel: 'Plattform',
+    icon: 'plattform',
+    kurz: 'Architektur, Schnittstellen, Dokumentenstruktur, KI-Analyse sowie Rollen und Rechte.',
+    lead: 'Wie Silverback ONE technisch aufgebaut ist und wie die Daten aus Dutzenden Quellen zu einer einzigen Vermögensübersicht zusammenlaufen.'
+  },
+  {
+    id: 'security',
+    titel: 'Security',
+    icon: 'security',
+    kurz: 'Hosting in Deutschland, Zero Trust, Verfügbarkeit und Nachweisfähigkeit gegenüber Prüfstellen.',
+    lead: 'Souverän, unabhängig, neutral und sicher ist kein Versprechen, sondern eine Reihe von Prüffragen. Hier stehen die Antworten darauf.'
+  },
+  {
+    id: 'allgemeine-informationen',
+    titel: 'Allgemeine Informationen',
+    icon: 'info',
+    kurz: 'Alle Meldungen aus dem News-Bereich, langfristig nach Themen sortiert.',
+    lead: 'Der öffentliche Teil des Intranets. Jede Meldung aus dem News-Bereich bleibt hier dauerhaft auffindbar, sortiert nach Thema statt nach Datum.'
+  },
+  {
+    id: 'intern',
+    titel: 'Interner Bereich',
+    icon: 'lock',
+    intern: true,
+    kurz: 'Unterlagen für Vertrieb und Partner. Nur nach Anmeldung mit der Firmenadresse sichtbar.',
+    lead: 'Der geschützte Teil des Intranets. Argumentationshilfen, Preise, Vorlagen und Angebote für Vertrieb und Partner.'
+  }
+];
+
+const ARTIKEL = [
+  /* ---------------- Erste Schritte ---------------- */
+  {
+    id: 'was-ist-silverback-one', kat: 'erste-schritte', titel: 'Was ist Silverback ONE',
+    lead: 'Der Ort, an dem alle Vermögensdaten zusammenlaufen, souverän und in Deutschland gehostet.',
+    stand: '02.09.2026', lesezeit: '4 Min.',
+    html: `
+<p>Silverback ONE ist eine Plattform für die Verwaltung, Analyse und strategische Steuerung privater Vermögensstrukturen. Sie führt Konten, Depots, Wallets, Beteiligungen, Sachwerte und Verträge an einem Ort zusammen und hält sie aktuell.</p>
+<p>Was früher auf ein Girokonto, ein Wertpapierdepot und vielleicht eine Immobilie begrenzt war, verteilt sich heute über zahlreiche Banken, Broker, Wallets, Beteiligungen und alternative Investments. Daraus entstehen Entscheidungen auf Basis von Bruchstücken. Silverback ONE schließt diese Lücke.</p>
+
+<h2 id="grundgedanke">Der Grundgedanke</h2>
+<p><strong>Voraushandeln ist existenziell.</strong> Wer seine Vermögensstruktur kennt, bevor er sie braucht, entscheidet früher und ruhiger. Genau dafür ist die Plattform gebaut. Sie liefert die Übersicht auf einen Klick, zugeschnitten auf Sie und Ihre Anlagestrategie.</p>
+
+<h2 id="nutzen">Die sieben Nutzenpunkte</h2>
+<ul>
+  <li><strong>Ganzheitliche Vermögensübersicht</strong> über alle Institute und Anlageklassen hinweg</li>
+  <li><strong>Digitale Vermögens- und Dokumentenstruktur</strong> statt verteilter Ordner und Tabellen</li>
+  <li><strong>Souveräne Datenhaltung in Deutschland</strong></li>
+  <li><strong>Einbindung Ihres Beraternetzwerks</strong>, denn Berater werden eingebunden und nicht ersetzt</li>
+  <li><strong>KI-gestützte Markt- und Portfolioanalyse</strong></li>
+  <li><strong>Intelligentes Kosten- und Ausgabencontrolling</strong></li>
+  <li><strong>Live-Bankenschnittstellen</strong> für tagesaktuelle Werte</li>
+</ul>
+
+<h2 id="fuer-wen">Für wen die Plattform gebaut ist</h2>
+<p>Für vermögende Privatpersonen und anspruchsvolle Investoren mit komplexen Strukturen, die über viele Institute und Anlageklassen verteilt sind. Der Nutzen wächst mit der Zahl der Quellen.</p>
+
+<div class="callout">
+  <div class="callout-title">Kurz gesagt</div>
+  <p>Alle Ihre Vermögensdaten souverän, neutral und zukunftssicher an einem Ort. Das ist Silverback ONE.</p>
+</div>`
+  },
+  {
+    id: 'zugang-und-anmeldung', kat: 'erste-schritte', titel: 'Zugang und erste Anmeldung',
+    lead: 'Wie Sie Ihren persönlichen Zugang erhalten und das Konto absichern.',
+    stand: '02.09.2026', lesezeit: '3 Min.',
+    html: `
+<p>Jeder Zugang wird persönlich vergeben und lässt sich einzeln wieder entziehen. Sammelzugänge gibt es nicht, weil sich sonst nicht nachvollziehen lässt, wer welche Daten gesehen hat.</p>
+
+<h2 id="ablauf">Ablauf</h2>
+<ol>
+  <li>Sie erhalten eine Einladung an Ihre persönliche E-Mail-Adresse.</li>
+  <li>Sie vergeben ein eigenes Passwort und richten den zweiten Faktor ein.</li>
+  <li>Beim ersten Start führt Sie ein kurzer Assistent durch die Grundeinstellungen.</li>
+</ol>
+
+<h2 id="zweiter-faktor">Zweiter Faktor</h2>
+<p>Der zweite Faktor ist verpflichtend und nicht abschaltbar. Unterstützt werden Authenticator-Apps nach dem TOTP-Standard sowie Sicherheitsschlüssel nach FIDO2. Eine Bestätigung per SMS ist bewusst nicht vorgesehen.</p>
+
+<h2 id="geraete">Geräte und Sitzungen</h2>
+<p>In den Einstellungen sehen Sie alle angemeldeten Geräte mit Zeitpunkt und Ort des letzten Zugriffs. Jede Sitzung lässt sich einzeln beenden.</p>
+
+<div class="callout warn">
+  <div class="callout-title">Noch offen</div>
+  <p>Die Selbstregistrierung ist nicht vorgesehen. Zugänge vergibt ausschließlich Silverback.</p>
+</div>`
+  },
+  {
+    id: 'vier-phasen', kat: 'erste-schritte', titel: 'Der Weg in vier Phasen',
+    lead: 'Von der digitalen Bestandsaufnahme bis zur intelligenten Vermögenssteuerung.',
+    stand: '29.08.2026', lesezeit: '6 Min.',
+    html: `
+<p>Der Aufbau folgt vier Phasen. Jede Phase hat ein klares Ergebnis, damit jederzeit erkennbar ist, wo Sie stehen.</p>
+
+<h2 id="phase-1">Phase 1, digitale Bestandsaufnahme</h2>
+<ul>
+  <li>Erfassung aller Vermögenswerte, Konten, Verträge und Dokumente</li>
+  <li>Analyse der bestehenden Datenquellen</li>
+  <li>Bewertung der aktuellen Datenschutz- und Sicherheitsstruktur</li>
+  <li>Definition einer einheitlichen Vermögensarchitektur</li>
+</ul>
+
+<h2 id="phase-2">Phase 2, Strukturierung und Migration</h2>
+<ul>
+  <li>Digitalisierung analoger Unterlagen</li>
+  <li>Zusammenführung bestehender Tabellen und Datenquellen</li>
+  <li>Migration in eine zentrale Plattform</li>
+  <li>Bereinigung von Dubletten und Vereinheitlichung der Datenstruktur</li>
+  <li>Überführung in eine Infrastruktur, die der DSGVO entspricht und in Deutschland liegt</li>
+</ul>
+
+<h2 id="phase-3">Phase 3, Vernetzung und Kommunikation</h2>
+<ul>
+  <li>Anbindung von Banken und Depots über sichere Schnittstellen</li>
+  <li>Integration von Steuerberater, Rechtsanwalt, Family Office und Beratern</li>
+  <li>Zentrale Dokumentenverwaltung mit rollenbasierten Zugriffsrechten</li>
+  <li>Automatisierte Aktualisierung relevanter Vermögensdaten</li>
+</ul>
+
+<h2 id="phase-4">Phase 4, intelligente Vermögenssteuerung</h2>
+<ul>
+  <li>Gesamtübersicht über alle Vermögenswerte in Echtzeit</li>
+  <li>KI-gestützte Markt- und Portfolioanalysen</li>
+  <li>Kosten- und Vertragscontrolling</li>
+  <li>Zentrale Kommunikation mit allen Beteiligten</li>
+  <li>Digitale Prozesse statt manueller Verwaltungsaufwände</li>
+</ul>
+
+<div class="callout">
+  <div class="callout-title">Warum die Reihenfolge zählt</div>
+  <p>Ohne saubere Bestandsaufnahme wird jede spätere Auswertung ungenau. Die erste Phase ist deshalb keine Vorstufe, sondern die Grundlage für alles Weitere.</p>
+</div>`
+  },
+  {
+    id: 'vermoegenswerte-erfassen', kat: 'erste-schritte', titel: 'Vermögenswerte erfassen',
+    lead: 'Welche Werte wie in die Plattform kommen, automatisch oder von Hand.',
+    stand: '29.08.2026', lesezeit: '4 Min.',
+    html: `
+<p>Vermögenswerte erreichen die Plattform auf drei Wegen. Welcher Weg passt, hängt von der Anlageform ab.</p>
+
+<div class="table-wrap">
+<table>
+  <thead><tr><th>Anlageform</th><th>Weg</th><th>Aktualisierung</th></tr></thead>
+  <tbody>
+    <tr><td>Konten und Depots</td><td>Bankenschnittstelle</td><td>täglich automatisch</td></tr>
+    <tr><td>Digitale Anlagen auf Blockchain-Basis</td><td>Adressen und Wallets hinterlegen</td><td>laufend</td></tr>
+    <tr><td>Immobilien</td><td>manuell mit Bewertungsgrundlage</td><td>zum gewählten Stichtag</td></tr>
+    <tr><td>Beteiligungen</td><td>manuell mit Dokument</td><td>zum gewählten Stichtag</td></tr>
+    <tr><td>Sachwerte und Sammlungen</td><td>manuell mit Beleg</td><td>zum gewählten Stichtag</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h2 id="belege">Belege gehören dazu</h2>
+<p>Zu jedem Wert lassen sich Dokumente hinterlegen, vom Kaufvertrag bis zum Wertgutachten. Das kostet am Anfang Zeit und zahlt sich später aus, weil sich die Herkunft eines Wertes damit jederzeit belegen lässt.</p>
+
+<h2 id="reihenfolge">Empfohlene Reihenfolge</h2>
+<ol>
+  <li>Konten und Depots anbinden, das erzeugt sofort ein tragfähiges Bild</li>
+  <li>Immobilien und Beteiligungen ergänzen</li>
+  <li>Digitale Anlagen aufnehmen</li>
+  <li>Sachwerte zuletzt, sie ändern sich am seltensten</li>
+</ol>`
+  },
+
+  /* ---------------- Produkte ---------------- */
+  {
+    id: 'one-finance', kat: 'produkte', titel: 'Silverback ONE Finance',
+    lead: 'Die Wealth-Plattform und das erste Produkt der Gruppe.',
+    stand: '02.09.2026', lesezeit: '5 Min.',
+    html: `
+<p>Silverback ONE Finance ist der Ausgangspunkt der Gruppe. Die Sparte bündelt alles, was mit der Organisation und Mehrung privaten Vermögens zu tun hat.</p>
+<p><strong>Claim.</strong> Vermögen das für Sie denkt.</p>
+
+<h2 id="leistung">Was die Sparte leistet</h2>
+<ul>
+  <li>Zusammenführung aller Vermögensdaten in einer Übersicht</li>
+  <li>KI-gestützte Analyse von Markt und Portfolio</li>
+  <li>Transparenz über Kosten, Provisionen und Prämien</li>
+  <li>Einbindung des vorhandenen Beraternetzwerks</li>
+</ul>
+
+<h2 id="haltung">Die Haltung dahinter</h2>
+<p>Unabhängig, neutral, sicher, souverän. Vermögen verwaltet man selbst. Keine Zufälle, keine fremden Hände. Wir bauen digitale Werkzeuge und Struktur für Ihre private, souveräne Vermögensmehrung.</p>
+
+<h2 id="abgrenzung">Verhältnis zu Beratern</h2>
+<p>Berater werden eingebunden, nicht ersetzt. Steuerberater, Rechtsanwalt und Family Office erhalten eigene Rollen mit klar begrenztem Zugriff. Die Plattform ersetzt keine Beratung, sie liefert allen Beteiligten dieselbe Datengrundlage.</p>`
+  },
+  {
+    id: 'one-energy', kat: 'produkte', titel: 'Silverback ONE Energy',
+    lead: 'Die Energiesparte der Gruppe, im Aufbau.',
+    stand: '02.09.2026', lesezeit: '2 Min.',
+    html: `
+<p>Silverback ONE Energy überträgt den Grundgedanken der Gruppe auf den Energiebereich. Datenlage, Verträge und Verbrauch werden strukturiert, damit Entscheidungen auf einer vollständigen Grundlage getroffen werden können.</p>
+
+<h2 id="stand">Stand</h2>
+<p>Die Sparte befindet sich im Aufbau. Für die Wissensdatenbank ist ein eigener Bereich vorgesehen, sobald die Leistungen final beschrieben sind.</p>
+
+<div class="callout warn">
+  <div class="callout-title">Platzhalter</div>
+  <p>Dieser Artikel ist ein Gerüst für die Vorschau. Die inhaltliche Beschreibung liefert Silverback.</p>
+</div>`
+  },
+  {
+    id: 'one-health', kat: 'produkte', titel: 'Silverback ONE Health',
+    lead: 'Die Gesundheitssparte der Gruppe, im Aufbau.',
+    stand: '02.09.2026', lesezeit: '2 Min.',
+    html: `
+<p>Silverback ONE Health ist die dritte Sparte unter dem Dach der SAI Silverback Group. Auch hier gilt der gleiche Grundsatz, nämlich eigene Daten an einem souveränen Ort zu halten und daraus vorausschauend zu handeln.</p>
+
+<h2 id="stand">Stand</h2>
+<p>Die Sparte befindet sich im Aufbau.</p>
+
+<div class="callout warn">
+  <div class="callout-title">Platzhalter</div>
+  <p>Dieser Artikel ist ein Gerüst für die Vorschau. Die inhaltliche Beschreibung liefert Silverback.</p>
+</div>`
+  },
+  {
+    id: 'markenarchitektur', kat: 'produkte', titel: 'Die SAI Silverback Group',
+    lead: 'Das Dach und die drei Sparten darunter.',
+    stand: '02.09.2026', lesezeit: '3 Min.',
+    html: `
+<p>Die SAI Silverback Group GmbH ist das Dach. Darunter liegen drei Sparten, die perspektivisch eigene Gesellschaften werden.</p>
+
+<div class="table-wrap">
+<table>
+  <thead><tr><th>Ebene</th><th>Name</th><th>Rolle</th></tr></thead>
+  <tbody>
+    <tr><td>Dach</td><td>SAI Silverback Group GmbH</td><td>Strategie, Technologie, Marke</td></tr>
+    <tr><td>Sparte</td><td>Silverback ONE Finance</td><td>Privates Vermögen, erstes Produkt</td></tr>
+    <tr><td>Sparte</td><td>Silverback ONE Energy</td><td>Energie, im Aufbau</td></tr>
+    <tr><td>Sparte</td><td>Silverback ONE Health</td><td>Gesundheit, im Aufbau</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h2 id="mission">Mission</h2>
+<p>Wir arbeiten mit der künstlichen Intelligenz von Silverback daran, private Vermögen heutiger und kommender Generationen zu sichern und zu mehren. Wir nutzen die digitalen Chancen und bieten vorausschauende Softwarelösungen für Ihre private Vermögensorganisation und Vermögensmehrung.</p>`
+  },
+
+  /* ---------------- Plattform ---------------- */
+  {
+    id: 'architektur', kat: 'plattform', titel: 'Architektur im Überblick',
+    lead: 'Wie die Plattform aufgebaut ist und wo welche Daten liegen.',
+    stand: '30.08.2026', lesezeit: '5 Min.',
+    html: `
+<p>Die Plattform ist in drei Schichten aufgebaut. Diese Trennung ist der Grund dafür, dass sich Zugriffe genau begrenzen und einzelne Bereiche unabhängig voneinander absichern lassen.</p>
+
+<h2 id="schichten">Die drei Schichten</h2>
+<h3 id="daten">Datenschicht</h3>
+<p>Hier liegen die Vermögensdaten, Dokumente und Belege. Der Zugriff erfolgt ausschließlich über die Anwendungsschicht, niemals direkt.</p>
+<h3 id="anwendung">Anwendungsschicht</h3>
+<p>Sie prüft bei jeder Anfrage Rolle und Berechtigung, führt die Quellen zusammen und schreibt jeden Zugriff mit.</p>
+<h3 id="oberflaeche">Oberfläche</h3>
+<p>Web, Tablet und Smartphone greifen auf dieselbe Anwendungsschicht zu. Es gibt keine Sonderwege für einzelne Geräte.</p>
+
+<h2 id="hosting">Betrieb</h2>
+<p>Betrieb und Datenhaltung erfolgen in Deutschland. Einzelheiten dazu stehen im Bereich <a class="inline" href="#/artikel/hosting-deutschland">Security</a>.</p>`
+  },
+  {
+    id: 'schnittstellen', kat: 'plattform', titel: 'Bankenschnittstellen und Depots',
+    lead: 'Wie Konten und Depots angebunden werden und was dabei übertragen wird.',
+    stand: '30.08.2026', lesezeit: '4 Min.',
+    html: `
+<p>Konten und Depots werden über etablierte Schnittstellen angebunden. Übertragen werden Umsätze, Bestände und Bewertungen, keine Zugangsdaten im Klartext.</p>
+
+<h2 id="lesend">Ausschließlich lesend</h2>
+<p>Alle Anbindungen sind lesend. Über Silverback ONE lassen sich keine Überweisungen auslösen und keine Orders erteilen. Das ist eine bewusste Entscheidung und reduziert den Schaden, falls ein Zugang doch einmal in falsche Hände gerät.</p>
+
+<h2 id="haeufigkeit">Aktualisierung</h2>
+<ul>
+  <li>Konten und Depots werden täglich abgeglichen</li>
+  <li>Ein Abgleich lässt sich jederzeit von Hand anstoßen</li>
+  <li>Fehlgeschlagene Abgleiche erscheinen sichtbar im Dashboard, nicht im Protokoll</li>
+</ul>
+
+<h2 id="grenzen">Grenzen</h2>
+<p>Nicht jedes Institut bietet eine geeignete Schnittstelle. Wo keine besteht, wird der Bestand als Stichtagswert gepflegt. Die Übersicht kennzeichnet diese Werte, damit der Unterschied sichtbar bleibt.</p>`
+  },
+  {
+    id: 'dokumentenstruktur', kat: 'plattform', titel: 'Dokumentenstruktur',
+    lead: 'Ordnung für Verträge, Nachweise und Gutachten.',
+    stand: '30.08.2026', lesezeit: '3 Min.',
+    html: `
+<p>Jedes Dokument gehört zu einem Vermögenswert, zu einem Vertrag oder zu einer Person. Diese Zuordnung ist der Unterschied zu einem Ordner voller Dateien.</p>
+
+<h2 id="typen">Dokumenttypen</h2>
+<ul>
+  <li>Kauf- und Verkaufsbelege</li>
+  <li>Verträge und Nachträge</li>
+  <li>Gutachten und Bewertungen</li>
+  <li>Steuerliche Unterlagen</li>
+  <li>Vollmachten und Regelungen für den Ernstfall</li>
+</ul>
+
+<h2 id="versionen">Versionen</h2>
+<p>Ältere Fassungen bleiben erhalten und werden nicht überschrieben. So bleibt nachvollziehbar, welcher Stand wann gegolten hat.</p>`
+  },
+  {
+    id: 'ki-analyse', kat: 'plattform', titel: 'KI-gestützte Analyse',
+    lead: 'Was die Auswertung leistet und wo ihre Grenzen liegen.',
+    stand: '30.08.2026', lesezeit: '4 Min.',
+    html: `
+<p>KI-Algorithmen unterstützen die Transparenz über Ihre Werte und verbinden Dutzende Quellen für Ihr Vermögenswachstum miteinander. Das schafft kein Berater von Hand.</p>
+
+<h2 id="leistung">Was ausgewertet wird</h2>
+<ul>
+  <li>Verteilung über Anlageklassen, Währungen und Regionen</li>
+  <li>Klumpenrisiken, die über mehrere Institute hinweg entstehen</li>
+  <li>Kostenquoten und wiederkehrende Belastungen</li>
+  <li>Auffälligkeiten im Zeitverlauf</li>
+</ul>
+
+<h2 id="grenzen">Grenzen</h2>
+<p>Die Auswertung ist keine Anlageberatung und keine Empfehlung. Sie zeigt Muster und Abweichungen. Die Entscheidung bleibt bei Ihnen, gemeinsam mit Ihren Beratern.</p>
+
+<div class="callout">
+  <div class="callout-title">Wichtig für die Kommunikation</div>
+  <p>Wir helfen Ihnen, Daten zu finden, die andere übersehen oder Ihnen gar nicht vorlegen. Das ist die Aussage. Eine Renditeaussage ist es ausdrücklich nicht.</p>
+</div>`
+  },
+  {
+    id: 'rollen-und-rechte', kat: 'plattform', titel: 'Rollen, Rechte und Beraternetzwerk',
+    lead: 'Wer was sehen darf und wie Zugriffe wieder entzogen werden.',
+    stand: '30.08.2026', lesezeit: '4 Min.',
+    html: `
+<p>Zugriff wird über Rollen vergeben, nicht über einzelne Freigaben. Das hält die Vergabe übersichtlich und macht den Entzug einfach.</p>
+
+<div class="table-wrap">
+<table>
+  <thead><tr><th>Rolle</th><th>Sicht</th><th>Typisch für</th></tr></thead>
+  <tbody>
+    <tr><td>Eigentümer</td><td>alles, inklusive Rechtevergabe</td><td>Sie selbst</td></tr>
+    <tr><td>Vertrauensperson</td><td>alles, ohne Rechtevergabe</td><td>Partnerin, Partner, Kinder</td></tr>
+    <tr><td>Steuerberatung</td><td>steuerlich relevante Werte und Dokumente</td><td>Kanzlei</td></tr>
+    <tr><td>Beratung</td><td>ausgewählte Bereiche</td><td>Vermögensberatung, Family Office</td></tr>
+    <tr><td>Lesezugriff</td><td>klar begrenzter Ausschnitt</td><td>befristete Prüfung</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h2 id="entzug">Entzug</h2>
+<p>Jeder Zugang lässt sich einzeln und sofort entziehen. Nach dem Entzug endet auch jede offene Sitzung dieser Person.</p>
+
+<h2 id="protokoll">Protokoll</h2>
+<p>Jeder Zugriff auf Dokumente wird mit Zeitpunkt und Person festgehalten. Das Protokoll ist für den Eigentümer einsehbar.</p>`
+  },
+
+  /* ---------------- Security ---------------- */
+  {
+    id: 'hosting-deutschland', kat: 'security', titel: 'Hosting und Datenhaltung in Deutschland',
+    lead: 'Wo die Daten liegen, wer sie betreibt und welche Rechtsordnung gilt.',
+    stand: '05.09.2026', lesezeit: '4 Min.',
+    html: `
+<p>Betrieb und Datenhaltung erfolgen in Deutschland. Das ist keine Randnotiz, sondern der Kern der Positionierung. Souveräne Datenhaltung in Deutschland gehört zu den sieben Nutzenpunkten von Silverback ONE.</p>
+
+<h2 id="was-das-heisst">Was das konkret bedeutet</h2>
+<ul>
+  <li>Die Daten verlassen den deutschen Rechtsraum im Regelbetrieb nicht</li>
+  <li>Es gibt keine Weitergabe personenbezogener Daten an Dritte zu eigenen Zwecken</li>
+  <li>Verarbeitung und Aufbewahrung richten sich nach der DSGVO</li>
+</ul>
+
+<h2 id="warum">Warum das gefragt wird</h2>
+<p>Die Frage nach dem Serverstandort ist heute eine Einkaufsfrage. Viele Interessenten würden deutsche Softwareangebote bevorzugt annehmen, sofern das Sicherheitsniveau stimmt. Genau darauf zielt diese Architektur.</p>
+
+<div class="callout warn">
+  <div class="callout-title">Vor Veröffentlichung prüfen</div>
+  <p>Der genaue Betreiber, der Standort der Rechenzentren und die vorliegenden Zertifizierungen müssen von Silverback bestätigt werden, bevor dieser Artikel öffentlich geht.</p>
+</div>`
+  },
+  {
+    id: 'zero-trust', kat: 'security', titel: 'Zero Trust und Zugriffsschutz',
+    lead: 'Kein Zugriff ohne Prüfung, unabhängig davon, woher er kommt.',
+    stand: '05.09.2026', lesezeit: '5 Min.',
+    html: `
+<p>Zero Trust bedeutet, dass keine Anfrage allein deshalb als vertrauenswürdig gilt, weil sie aus dem eigenen Netz stammt. Jeder Zugriff wird einzeln geprüft, jedes Mal.</p>
+
+<h2 id="prinzipien">Die Prinzipien</h2>
+<ul>
+  <li><strong>Jede Anfrage wird geprüft.</strong> Identität, Gerät und Berechtigung, bei jedem Aufruf</li>
+  <li><strong>So wenig Rechte wie möglich.</strong> Eine Rolle sieht genau das, was sie braucht</li>
+  <li><strong>Verschlüsselung durchgängig.</strong> Auf dem Transportweg und im Ruhezustand</li>
+  <li><strong>Alles wird mitgeschrieben.</strong> Zugriffe sind nachvollziehbar, auch die von innen</li>
+  <li><strong>Trennung der Schichten.</strong> Kein direkter Weg von außen an die Datenschicht</li>
+</ul>
+
+<h2 id="massstab">Der Maßstab</h2>
+<p>Als Orientierung dienen die Empfehlungen des BSI zu bekannten Angriffsvektoren. Sicherheit wird dabei nicht als Zustand verstanden, sondern als laufende Arbeit.</p>
+
+<h2 id="fragen">Die Fragen, die Kunden tatsächlich stellen</h2>
+<div class="qa">
+  <div class="q">Wer garantiert mir, dass der Stecker für die Software nicht gezogen wird?</div>
+  <p>Die Plattform wird in Deutschland betrieben und unterliegt deutschem Recht. Ein Anbieterwechsel aus politischen Gründen im Ausland trifft sie deshalb nicht. Zusätzlich lassen sich alle Daten jederzeit vollständig exportieren.</p>
+</div>
+<div class="qa">
+  <div class="q">Wer garantiert mir, dass meine Vermögensdaten sicher und widerstandsfähig sind?</div>
+  <p>Getrennte Schichten, durchgängige Verschlüsselung, geprüfte Zugriffe und Sicherungen, die regelmäßig auf Wiederherstellbarkeit getestet werden.</p>
+</div>
+<div class="qa">
+  <div class="q">Werden personenbezogene Daten an Dritte weitergegeben?</div>
+  <p>Nein. Eine Weitergabe zu eigenen Zwecken Dritter findet nicht statt.</p>
+</div>
+
+<div class="callout warn">
+  <div class="callout-title">Vor Veröffentlichung prüfen</div>
+  <p>Die Antworten sind der fachliche Rahmen. Die konkreten technischen Zusagen müssen vor der Veröffentlichung mit der Technik abgeglichen werden, damit hier nichts zugesagt wird, was im Betrieb anders aussieht.</p>
+</div>`
+  },
+  {
+    id: 'verfuegbarkeit', kat: 'security', titel: 'Verfügbarkeit und Widerstandsfähigkeit',
+    lead: 'Sicherungen, Wiederherstellung und der Export der eigenen Daten.',
+    stand: '05.09.2026', lesezeit: '3 Min.',
+    html: `
+<p>Widerstandsfähigkeit heißt, dass ein Ausfall weder Daten kostet noch den Zugriff dauerhaft blockiert.</p>
+
+<h2 id="sicherungen">Sicherungen</h2>
+<ul>
+  <li>Regelmäßige, verschlüsselte Sicherungen</li>
+  <li>Aufbewahrung an einem zweiten Ort</li>
+  <li>Wiederherstellung wird geprüft und nicht nur angenommen</li>
+</ul>
+
+<h2 id="export">Export</h2>
+<p>Sie können Ihren gesamten Datenbestand jederzeit exportieren, Dokumente eingeschlossen. Das ist die praktische Antwort auf die Frage nach dem Stecker. Wer seine Daten jederzeit mitnehmen kann, ist nicht abhängig.</p>
+
+<div class="callout">
+  <div class="callout-title">Souveränität ganz praktisch</div>
+  <p>Souveränität zeigt sich nicht in der Beschreibung, sondern in der Möglichkeit, jederzeit zu gehen und alles mitzunehmen.</p>
+</div>`
+  },
+  {
+    id: 'nachweisfaehigkeit', kat: 'security', titel: 'Nachweisfähigkeit gegenüber Prüfstellen',
+    lead: 'Warum eine dokumentierte Vermögensstruktur der beste Schutz ist.',
+    stand: '05.09.2026', lesezeit: '6 Min.',
+    html: `
+<p>Die Prüfpflichten rund um Vermögen nehmen zu. Wer die Herkunft seiner Werte belegen kann, ist im Prüfungsfall handlungsfähig. Wer erst im Prüfungsfall anfängt zu suchen, ist es nicht.</p>
+
+<h2 id="ausgangslage">Die Ausgangslage</h2>
+<p>Vermögen verteilt sich heute über viele Institute und Anlageformen, digitale Anlagen auf Blockchain-Basis eingeschlossen. Für jede dieser Positionen gilt dasselbe, nämlich dass Herkunft und Entwicklung plausibel darstellbar sein müssen.</p>
+
+<h2 id="was-hilft">Was dabei hilft</h2>
+<ul>
+  <li>Alle Vermögenswerte an einem Ort, mit Stichtag und Bewertungsgrundlage</li>
+  <li>Belege am Wert, nicht in einem getrennten Ordner</li>
+  <li>Versionen bleiben erhalten, damit frühere Stände nachvollziehbar sind</li>
+  <li>Ein Protokoll darüber, wer wann worauf zugegriffen hat</li>
+</ul>
+
+<h2 id="voraushandeln">Voraushandeln statt nachweisen müssen</h2>
+<p>Nachweisfähigkeit entsteht nicht rückwirkend. Sie ist das Ergebnis einer Struktur, die vorher aufgebaut wurde. Genau das meint <strong>Voraushandeln</strong>. Die organisatorische Bestandsaufnahme ist dabei der erste Schritt und zugleich der wirksamste.</p>
+
+<h2 id="rahmen">Der regulatorische Rahmen</h2>
+<p>Die europäische Behörde zur Bekämpfung der Geldwäsche mit Sitz in Frankfurt baut sich derzeit auf. Zuständig für die Prüfung bleiben zunächst die nationalen Aufsichtsbehörden. Parallel dazu wird über ein europäisches Vermögensregister diskutiert.</p>
+
+<div class="callout warn">
+  <div class="callout-title">Vor Veröffentlichung prüfen</div>
+  <p>Die Aussagen zum regulatorischen Rahmen stammen aus einer Gesprächsnotiz vom 30.08.2026 und sind noch nicht belegt. Für einen öffentlichen Artikel brauchen wir belegbare Quellen zu Zuständigkeit, Zeitplan und Vermögensregister. Solange die fehlen, bleibt es beim allgemeinen Hinweis auf zunehmende Prüfpflichten.</p>
+</div>`
+  },
+  {
+    id: 'sicherheitsfragen', kat: 'security', titel: 'Häufige Sicherheitsfragen',
+    lead: 'Kurze Antworten auf die Fragen, die im Gespräch immer wieder kommen.',
+    stand: '05.09.2026', lesezeit: '4 Min.',
+    html: `
+<div class="qa"><div class="q">Liegen die Daten in den USA?</div><p>Nein. Betrieb und Datenhaltung erfolgen in Deutschland.</p></div>
+<div class="qa"><div class="q">Kann Silverback meine Daten sehen?</div><p>Zugriff besteht nur im Rahmen von Support und Betrieb, er wird protokolliert und ist auf das Notwendige begrenzt.</p></div>
+<div class="qa"><div class="q">Was passiert, wenn ich das Passwort verliere?</div><p>Die Wiederherstellung läuft über den zweiten Faktor. Ohne diesen ist kein Zugriff möglich, auch nicht für uns.</p></div>
+<div class="qa"><div class="q">Kann jemand über die Plattform Geld bewegen?</div><p>Nein. Alle Bankanbindungen sind ausschließlich lesend.</p></div>
+<div class="qa"><div class="q">Was passiert mit meinen Daten, wenn ich kündige?</div><p>Sie exportieren Ihren vollständigen Bestand, danach werden die Daten nach der vereinbarten Frist gelöscht.</p></div>
+<div class="qa"><div class="q">Gibt es eine Zertifizierung?</div><p>Diese Angabe ergänzen wir, sobald sie vorliegt.</p></div>`
+  },
+
+  /* ---------------- Allgemeine Informationen ---------------- */
+  {
+    id: 'news-drei-schichten', kat: 'allgemeine-informationen', unterkat: 'Produkt und Technik',
+    titel: 'Die Drei-Schichten-Architektur von Silverback ONE',
+    lead: 'Warum die Trennung von Daten, Anwendung und Oberfläche der Kern der Sicherheit ist.',
+    stand: '14.07.2026', lesezeit: '4 Min.',
+    html: `
+<p>Diese Meldung stammt aus dem News-Bereich der Website und bleibt hier dauerhaft auffindbar, sortiert nach Thema statt nach Datum.</p>
+<p>Die Architektur trennt Datenhaltung, Anwendung und Oberfläche. Diese Trennung ist der Grund dafür, dass sich Zugriffe genau begrenzen lassen. Die technische Einordnung steht im Bereich <a class="inline" href="#/artikel/architektur">Plattform</a>.</p>
+<div class="callout"><div class="callout-title">Hinweis zur Vorschau</div><p>Der vollständige Text wird beim Aufbau aus dem News-Bereich übernommen. Hier steht nur der Anriss.</p></div>`
+  },
+  {
+    id: 'news-jahresstart', kat: 'allgemeine-informationen', unterkat: 'Unternehmen',
+    titel: 'Jahresstart 2026',
+    lead: 'Wo die Gruppe steht und was in diesem Jahr ansteht.',
+    stand: '08.01.2026', lesezeit: '3 Min.',
+    html: `
+<p>Diese Meldung stammt aus dem News-Bereich der Website und bleibt hier dauerhaft auffindbar.</p>
+<div class="callout"><div class="callout-title">Hinweis zur Vorschau</div><p>Der vollständige Text wird beim Aufbau aus dem News-Bereich übernommen.</p></div>`
+  },
+  {
+    id: 'news-deutschland', kat: 'allgemeine-informationen', unterkat: 'Unternehmen',
+    titel: 'Wir investieren in Deutschland',
+    lead: 'Warum Standort und Rechtsraum für eine Vermögensplattform zählen.',
+    stand: '22.04.2026', lesezeit: '3 Min.',
+    html: `
+<p>Diese Meldung stammt aus dem News-Bereich der Website und bleibt hier dauerhaft auffindbar.</p>
+<div class="callout"><div class="callout-title">Hinweis zur Vorschau</div><p>Der vollständige Text wird beim Aufbau aus dem News-Bereich übernommen.</p></div>`
+  },
+  {
+    id: 'info-struktur', kat: 'allgemeine-informationen', unterkat: 'Über diesen Bereich',
+    titel: 'So ist dieser Bereich aufgebaut',
+    lead: 'Wie aus einzelnen Meldungen dauerhaftes Wissen wird.',
+    stand: '06.09.2026', lesezeit: '2 Min.',
+    html: `
+<p>Der News-Bereich der Website zeigt das Aktuelle. Dieser Bereich zeigt dasselbe Material dauerhaft und nach Themen geordnet. Eine Meldung erscheint also zweimal, einmal als Nachricht und einmal als Wissen.</p>
+
+<h2 id="unterkategorien">Vorgesehene Unterkategorien</h2>
+<ul>
+  <li>Unternehmen</li>
+  <li>Produkt und Technik</li>
+  <li>Veranstaltungen</li>
+  <li>Presse und Medien</li>
+</ul>
+
+<h2 id="pflege">Pflege</h2>
+<p>Jede neue Meldung erhält beim Anlegen eine Unterkategorie. Damit wächst die Struktur mit, ohne dass jemand später aufräumen muss.</p>`
+  },
+
+  /* ---------------- Intern ---------------- */
+  {
+    id: 'intern-argumentation-sicherheit', kat: 'intern', intern: true, unterkat: 'Vertrieb',
+    titel: 'Argumentation Sicherheit und Nachweisfähigkeit',
+    lead: 'Zwei Gesprächseinstiege, die über den Kostenvergleich hinausgehen.',
+    stand: '05.09.2026', lesezeit: '7 Min.',
+    html: `
+<div class="callout warn">
+  <div class="callout-title">Intern, Entwurf</div>
+  <p>Grundlage ist eine Gesprächsnotiz vom 30.08.2026. Der Inhalt ist noch nicht mit Vanessa und Jörn abgeglichen. Zahlen, Namen und rechtliche Aussagen vor jeder Verwendung prüfen.</p>
+</div>
+
+<p>Bisher steigt der Vertrieb meist über Überblick und Kosten ein. Diese beiden Linien wirken bei vermögenden Gesprächspartnern häufig stärker, weil sie an einer bereits vorhandenen Sorge ansetzen.</p>
+
+<h2 id="linie-1">Linie 1, Sicherheit und digitale Souveränität</h2>
+<p>Die Beobachtung aus dem Markt ist eindeutig. Viele Interessenten würden deutsche Softwareangebote bevorzugt annehmen, sofern das Sicherheitsniveau stimmt.</p>
+<p>Zwei Fragen kommen dabei fast immer.</p>
+<ul>
+  <li>Wer garantiert mir, dass der Stecker für die Software nicht gezogen wird?</li>
+  <li>Wer garantiert mir, dass meine Vermögensdaten sicher und widerstandsfähig sind?</li>
+</ul>
+<p>Dahinter stehen vier Erwartungen, nämlich keine Abhängigkeit von amerikanischen Anbietern und Rechtsräumen, keine personenbezogenen Daten an Dritte, Schutz vor Angriffen sowie ein Sicherheitsniveau, das sich an den Empfehlungen des BSI messen lässt.</p>
+<p>Die Antworten dazu stehen im öffentlichen Bereich unter <a class="inline" href="#/artikel/zero-trust">Zero Trust und Zugriffsschutz</a>. Im Gespräch reicht der Verweis auf den Export. Wer jederzeit alles mitnehmen kann, ist nicht abhängig.</p>
+
+<h2 id="linie-2">Linie 2, Nachweisfähigkeit</h2>
+<p>Der zweite Einstieg zielt auf Vorsorge. Die Prüfpflichten nehmen zu, digitale Anlageformen auf Blockchain-Basis eingeschlossen. Der Kern des Arguments ist knapp.</p>
+<p><strong>Der beste Schutz ist die Nachweisfähigkeit.</strong> Alles muss legal laufen, und die Vermögensstruktur wird bewusst gestaltet, geplant und dokumentiert, und zwar mit Software.</p>
+<p>Für das Gespräch heißt das, die organisatorische Bestandsaufnahme ist die erste Antwort. Sie ist zugleich Phase 1 des Vorgehensmodells, der Übergang ins Angebot ist damit kurz.</p>
+
+<h2 id="grenzen">Wo die Argumentation aufhört</h2>
+<p>Angstargumente passen nur begrenzt zur Tonalität der Marke. Silverback besetzt digitale Chancen positiv und tritt nicht defensiv auf. Krisenszenarien gehören deshalb nicht in Anzeigen, Postings oder auf die Website. Im persönlichen Gespräch sind sie tragfähig, wenn der Gesprächspartner das Thema selbst aufbringt.</p>
+
+<h2 id="offen">Vor Verwendung klären</h2>
+<ol>
+  <li>Darf die Nähe zum Verfassungsschutz erwähnt werden, und in welcher Form?</li>
+  <li>Was bedeutet der Begriff Backscan?</li>
+  <li>Welcher Professor ist gemeint und darf er zitiert werden?</li>
+  <li>Wofür steht die Zahl 17 Jahre?</li>
+  <li>Wie belastbar sind die Aussagen zur europäischen Geldwäschebehörde, zur Prüfung ab 2027 und zum Vermögensregister?</li>
+  <li>Wie weit darf die Argumentation zu Krisen und Lastenausgleich nach außen gehen?</li>
+</ol>`
+  },
+  {
+    id: 'intern-einwaende', kat: 'intern', intern: true, unterkat: 'Vertrieb',
+    titel: 'Einwandbehandlung',
+    lead: 'Die häufigsten Einwände und belastbare Antworten darauf.',
+    stand: '05.09.2026', lesezeit: '5 Min.',
+    html: `
+<div class="callout warn"><div class="callout-title">Intern, Entwurf</div><p>Noch nicht mit dem Kunden abgestimmt.</p></div>
+
+<div class="qa"><div class="q">Das macht mein Vermögensverwalter schon.</div><p>Er macht es für seinen Ausschnitt. Die Plattform führt alle Ausschnitte zusammen, auch die, die er nicht sieht. Berater werden eingebunden, nicht ersetzt.</p></div>
+<div class="qa"><div class="q">Ich habe meine Übersicht in einer Tabelle.</div><p>Eine Tabelle zeigt den Stand von gestern und kennt keine Belege. Genau daran scheitert sie im Prüfungsfall.</p></div>
+<div class="qa"><div class="q">Ich gebe meine Daten nicht aus der Hand.</div><p>Sie geben sie nicht aus der Hand. Die Daten liegen in Deutschland, der Zugriff ist geprüft und protokolliert, und Sie können jederzeit alles exportieren.</p></div>
+<div class="qa"><div class="q">Das ist mir zu aufwendig.</div><p>Der Aufwand liegt vollständig in Phase 1. Danach aktualisiert sich der größte Teil von selbst.</p></div>
+<div class="qa"><div class="q">Was kostet das?</div><p>Preise über die aktuelle Konditionsübersicht, nicht aus dem Gedächtnis.</p></div>`
+  },
+  {
+    id: 'intern-unterlagen', kat: 'intern', intern: true, unterkat: 'Unterlagen',
+    titel: 'Broschüren und Präsentationen',
+    lead: 'Aktuelle Unterlagen zum Versand und zur Präsentation.',
+    stand: '02.09.2026', lesezeit: '2 Min.',
+    html: `
+<p>Alle Unterlagen liegen in der jeweils freigegebenen Fassung vor. Ältere Stände werden bewusst nicht verlinkt, damit im Vertrieb nur eine Fassung im Umlauf ist.</p>
+<div class="table-wrap">
+<table>
+  <thead><tr><th>Unterlage</th><th>Format</th><th>Stand</th></tr></thead>
+  <tbody>
+    <tr><td>Broschüre Silverback ONE Finance</td><td>PDF, A5 quer</td><td>26.08.2026</td></tr>
+    <tr><td>Broschüre Silverback ONE Finance</td><td>PDF, A4 quer</td><td>26.08.2026</td></tr>
+    <tr><td>Factsheet Nutzen</td><td>PDF, eine Seite</td><td>29.07.2026</td></tr>
+    <tr><td>Präsentation Erstgespräch</td><td>PDF</td><td>in Arbeit</td></tr>
+  </tbody>
+</table>
+</div>
+<div class="callout"><div class="callout-title">Vorschau</div><p>In der Vorschau sind die Dateien nicht hinterlegt. Im späteren Portal steht hier jeweils ein Download, der ohne Anmeldung nicht erreichbar ist.</p></div>`
+  },
+  {
+    id: 'intern-angebote', kat: 'intern', intern: true, unterkat: 'Angebote',
+    titel: 'Angebote erstellen und versenden',
+    lead: 'Vom Formular zur Unterschrift, ohne Umweg über die Textverarbeitung.',
+    stand: '27.08.2026', lesezeit: '3 Min.',
+    html: `
+<p>Angebote entstehen aus einer hinterlegten Vorlage. Der Vertrieb füllt ein Formular aus, das Angebot geht zur elektronischen Unterschrift an den Kunden, der Status läuft zurück ins Portal.</p>
+
+<h2 id="ablauf">Ablauf</h2>
+<ol>
+  <li>Formular ausfüllen mit Kunde, Firma, E-Mail, Leistung, Preis und Laufzeit</li>
+  <li>Angebot als Entwurf speichern oder direkt versenden</li>
+  <li>Status verfolgen, von gesendet über angesehen bis unterschrieben</li>
+</ol>
+
+<div class="callout warn">
+  <div class="callout-title">Noch nicht verbunden</div>
+  <p>Der Zugang zur Unterschriftenlösung liegt noch nicht vor. Bis dahin lassen sich Angebote nur als Entwurf speichern.</p>
+</div>`
+  },
+  {
+    id: 'intern-onboarding', kat: 'intern', intern: true, unterkat: 'Unterlagen',
+    titel: 'Onboarding neuer Partner',
+    lead: 'Was ein neuer Partner in der ersten Woche braucht.',
+    stand: '02.09.2026', lesezeit: '3 Min.',
+    html: `
+<p>Der Einstieg folgt einer festen Reihenfolge, damit niemand mit den Preisen anfängt, bevor er die Haltung der Marke kennt.</p>
+<ol>
+  <li>Marke und Haltung, dazu die Schlagsätze und der Umgang mit Wettbewerb</li>
+  <li>Produktüberblick Silverback ONE Finance</li>
+  <li>Die vier Phasen als Gesprächsleitfaden</li>
+  <li>Sicherheit und Nachweisfähigkeit als Einstieg</li>
+  <li>Preise und Angebotserstellung</li>
+</ol>
+<div class="callout"><div class="callout-title">Grundregel</div><p>Banken und Berater werden nicht angegriffen. Der Vorteil wird positiv formuliert.</p></div>`
+  }
+];
+
+/* =========================================================================
+   Zustand
+   ========================================================================= */
+const state = {
+  user: null,
+  theme: 'dark'
+};
+
+try {
+  const t = localStorage.getItem('sb-theme');
+  if (t === 'light' || t === 'dark') state.theme = t;
+  const u = localStorage.getItem('sb-user');
+  if (u) state.user = JSON.parse(u);
+} catch (e) { /* Speicher nicht verfügbar, Vorschau läuft trotzdem */ }
+
+document.documentElement.setAttribute('data-theme', state.theme);
+
+function setTheme(t) {
+  state.theme = t;
+  document.documentElement.setAttribute('data-theme', t);
+  try { localStorage.setItem('sb-theme', t); } catch (e) {}
+}
+
+function login(mail) {
+  state.user = { mail: mail, rolle: 'Vertrieb' };
+  try { localStorage.setItem('sb-user', JSON.stringify(state.user)); } catch (e) {}
+}
+function logout() {
+  state.user = null;
+  try { localStorage.removeItem('sb-user'); } catch (e) {}
+}
+
+/* =========================================================================
+   Hilfsfunktionen
+   ========================================================================= */
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const katById = id => KATEGORIEN.find(k => k.id === id);
+const artById = id => ARTIKEL.find(a => a.id === id);
+const sichtbar = a => !a.intern || !!state.user;
+const artikelIn = katId => ARTIKEL.filter(a => a.kat === katId && sichtbar(a));
+
+function textOf(a) {
+  const d = document.createElement('div');
+  d.innerHTML = a.html;
+  return d.textContent.replace(/\s+/g, ' ').trim();
+}
+
+/* =========================================================================
+   Ansichten
+   ========================================================================= */
+
+function viewHome() {
+  const tiles = KATEGORIEN.filter(k => !k.intern && k.id !== 'allgemeine-informationen').map(k => `
+    <a class="tile" href="#/kat/${k.id}">
+      <div class="tile-icon">${ICONS[k.icon]}</div>
+      <h3>${esc(k.titel)}</h3>
+      <p>${esc(k.kurz)}</p>
+      <span class="tile-meta">${artikelIn(k.id).length} Artikel
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </span>
+    </a>`).join('');
+
+  const news = ARTIKEL.filter(a => a.kat === 'allgemeine-informationen' && a.id !== 'info-struktur').slice(0, 3).map(a => `
+    <a class="news-card" href="#/artikel/${a.id}">
+      <div class="news-kat">${esc(a.unterkat || 'Allgemein')}</div>
+      <h4>${esc(a.titel)}</h4>
+      <p>${esc(a.lead)}</p>
+      <div class="news-date">${esc(a.stand)}</div>
+    </a>`).join('');
+
+  const portalPanel = state.user ? `
+    <h3>Sie sind angemeldet</h3>
+    <p>Der interne Bereich ist freigeschaltet. Interne Artikel erscheinen zusätzlich in der Navigation und tragen ein Schloss.</p>
+    <a class="btn btn-primary" href="#/kat/intern">Zum internen Bereich</a>
+  ` : `
+    <h3>Portal für Vertrieb und Partner</h3>
+    <p>Der interne Teil des Intranets liegt hinter der Anmeldung. Zugang erhalten Mitarbeitende und Partner über ihre Firmenadresse.</p>
+    <ul>
+      <li>Argumentationshilfen und Einwandbehandlung</li>
+      <li>Broschüren, Präsentationen und Preise</li>
+      <li>Angebote erstellen und zur Unterschrift versenden</li>
+    </ul>
+    <a class="btn btn-primary" href="#/portal">Anmelden</a>
+  `;
+
+  return `
+  <section class="hero">
+    <div class="wrap">
+      <div class="eyebrow">Wissensdatenbank</div>
+      <h1 class="hero-title">Alles über Silverback ONE<br />an einem Ort</h1>
+      <p class="hero-sub">Anleitungen, Produktwissen, technische Grundlagen und Sicherheit. Öffentlich zugänglich, mit einem geschützten Bereich für Vertrieb und Partner.</p>
+      <form class="hero-search" id="herosearch">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="opacity:.6"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <input type="search" placeholder="Wonach suchen Sie?" aria-label="Wissen durchsuchen" />
+      </form>
+    </div>
+  </section>
+
+  <div class="wrap">
+    <div class="tiles">${tiles}</div>
+
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <h2>Allgemeine Informationen</h2>
+          <p>Alle Meldungen aus dem News-Bereich, dauerhaft und nach Themen sortiert.</p>
+        </div>
+        <a class="section-link" href="#/kat/allgemeine-informationen">Alle ansehen</a>
+      </div>
+      <div class="news-grid">${news}</div>
+    </section>
+
+    <section class="section">
+      <div class="split">
+        <div class="panel">${portalPanel}</div>
+        <div class="panel">
+          <h3>Häufig gelesen</h3>
+          <p>Die Artikel, die im Gespräch am häufigsten gebraucht werden.</p>
+          <ul>
+            <li><a class="inline" href="#/artikel/was-ist-silverback-one">Was ist Silverback ONE</a></li>
+            <li><a class="inline" href="#/artikel/vier-phasen">Der Weg in vier Phasen</a></li>
+            <li><a class="inline" href="#/artikel/zero-trust">Zero Trust und Zugriffsschutz</a></li>
+            <li><a class="inline" href="#/artikel/nachweisfaehigkeit">Nachweisfähigkeit gegenüber Prüfstellen</a></li>
+            <li><a class="inline" href="#/artikel/sicherheitsfragen">Häufige Sicherheitsfragen</a></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </div>`;
+}
+
+function sidebarHtml(aktivId) {
+  return KATEGORIEN.filter(k => !k.intern || state.user).map(k => {
+    const arts = artikelIn(k.id);
+    if (!arts.length) return '';
+    const links = arts.map(a => `
+      <a class="sb-link ${a.id === aktivId ? 'is-active' : ''}" href="#/artikel/${a.id}">
+        <span>${esc(a.titel)}</span>${a.intern ? ICONS.lock : ''}
+      </a>`).join('');
+    return `<div class="sb-group">
+      <div class="sb-title">${k.intern ? ICONS.lock : ''}${esc(k.titel)}</div>
+      ${links}
+    </div>`;
+  }).join('');
+}
+
+function tocHtml(html) {
+  const d = document.createElement('div');
+  d.innerHTML = html;
+  const hs = [...d.querySelectorAll('h2[id], h3[id]')];
+  if (!hs.length) return '';
+  return `<div class="toc-title">Auf dieser Seite</div>` + hs.map(h =>
+    `<a class="${h.tagName === 'H3' ? 'lvl3' : ''}" href="#${h.id}">${esc(h.textContent)}</a>`
+  ).join('');
+}
+
+function viewArtikel(id) {
+  const a = artById(id);
+  if (!a) return viewNotFound();
+  if (a.intern && !state.user) return viewGesperrt(a);
+
+  const k = katById(a.kat);
+  const geschwister = artikelIn(a.kat);
+  const i = geschwister.findIndex(x => x.id === a.id);
+  const prev = geschwister[i - 1];
+  const next = geschwister[i + 1];
+
+  const nav = `
+    <div class="article-nav">
+      ${prev ? `<a href="#/artikel/${prev.id}"><div class="dir">Zurück</div><div class="ttl">${esc(prev.titel)}</div></a>` : '<span></span>'}
+      ${next ? `<a class="right" href="#/artikel/${next.id}"><div class="dir">Weiter</div><div class="ttl">${esc(next.titel)}</div></a>` : '<span></span>'}
+    </div>`;
+
+  return `<div class="wrap"><div class="docs">
+    <aside class="sidebar">${sidebarHtml(a.id)}</aside>
+    <article class="article">
+      <div class="breadcrumb">
+        <a href="#/">Wissen</a>
+        <span>/</span>
+        <a href="#/kat/${k.id}">${esc(k.titel)}</a>
+        ${a.unterkat ? `<span>/</span><span>${esc(a.unterkat)}</span>` : ''}
+      </div>
+      <h1>${esc(a.titel)}</h1>
+      <p class="article-lead">${esc(a.lead)}</p>
+      <div class="article-meta">
+        <span>Stand ${esc(a.stand)}</span>
+        <span>·</span>
+        <span>${esc(a.lesezeit)} Lesezeit</span>
+        ${a.intern ? `<span class="badge-intern">${ICONS.lock} Intern</span>` : ''}
+      </div>
+      ${a.html}
+      ${nav}
+    </article>
+    <aside class="toc">${tocHtml(a.html)}</aside>
+  </div></div>`;
+}
+
+function viewKategorie(id) {
+  const k = katById(id);
+  if (!k) return viewNotFound();
+  if (k.intern && !state.user) return viewGesperrt(k);
+
+  const arts = artikelIn(id);
+  const cards = arts.map(a => `
+    <a class="kat-card" href="#/artikel/${a.id}">
+      <h4>${esc(a.titel)} ${a.intern ? ICONS.lock : ''}</h4>
+      <p>${esc(a.lead)}</p>
+    </a>`).join('');
+
+  return `<div class="wrap">
+    <div class="kat-head">
+      <div class="breadcrumb"><a href="#/">Wissen</a><span>/</span><span>${esc(k.titel)}</span></div>
+      <h1>${esc(k.titel)}</h1>
+      <p>${esc(k.lead)}</p>
+    </div>
+    <div class="kat-grid">${cards}</div>
+  </div>`;
+}
+
+function viewGesperrt(x) {
+  return `<div class="wrap"><div class="portal-wrap"><div class="login-card">
+    <h1>Anmeldung erforderlich</h1>
+    <p class="sub">Der Bereich <strong>${esc(x.titel)}</strong> gehört zum internen Intranet und ist erst nach der Anmeldung sichtbar.</p>
+    <a class="btn btn-primary" href="#/portal">Zum Portal</a>
+  </div></div></div>`;
+}
+
+function viewPortal() {
+  if (state.user) {
+    const arts = artikelIn('intern');
+    const gruppen = {};
+    arts.forEach(a => { (gruppen[a.unterkat || 'Allgemein'] ||= []).push(a); });
+    const bloecke = Object.keys(gruppen).map(g => `
+      <section class="section">
+        <div class="section-head"><div><h2>${esc(g)}</h2></div></div>
+        <div class="kat-grid">
+          ${gruppen[g].map(a => `<a class="kat-card" href="#/artikel/${a.id}"><h4>${esc(a.titel)} ${ICONS.lock}</h4><p>${esc(a.lead)}</p></a>`).join('')}
+        </div>
+      </section>`).join('');
+
+    const initialen = state.user.mail.slice(0, 2).toUpperCase();
+    return `<div class="wrap">
+      <div class="portal-head">
+        <div>
+          <h1>Internes Intranet</h1>
+          <p>Unterlagen, Argumentation und Angebote für Vertrieb und Partner.</p>
+        </div>
+        <div class="user-chip">
+          <div class="avatar">${esc(initialen)}</div>
+          <div>
+            <div class="u-mail">${esc(state.user.mail)}</div>
+            <div class="u-rolle">Rolle ${esc(state.user.rolle)}</div>
+          </div>
+          <button class="btn btn-ghost" id="logoutbtn" style="margin-left:8px">Abmelden</button>
+        </div>
+      </div>
+      ${bloecke}
+    </div>`;
+  }
+
+  return `<div class="wrap"><div class="portal-wrap">
+    <div class="login-card">
+      <h1>Portal</h1>
+      <p class="sub">Anmeldung für Mitarbeitende und Partner der SAI Silverback Group.</p>
+      <div class="login-error" id="loginerror"></div>
+      <form id="loginform">
+        <div class="field">
+          <label for="mail">E-Mail-Adresse</label>
+          <input type="email" id="mail" placeholder="vorname.nachname@silverbackgmbh.de" autocomplete="username" required />
+          <div class="hint">Nur Adressen der Domain silverbackgmbh.de</div>
+        </div>
+        <div class="field">
+          <label for="pw">Passwort</label>
+          <input type="password" id="pw" placeholder="Passwort" autocomplete="current-password" required />
+        </div>
+        <button class="btn btn-primary" type="submit">Anmelden</button>
+      </form>
+      <div class="login-note">
+        In dieser Vorschau genügt eine beliebige Adresse auf <strong>@silverbackgmbh.de</strong> und ein beliebiges Passwort. Es findet keine echte Prüfung statt und es werden keine Eingaben übertragen.
+      </div>
+    </div>
+  </div></div>`;
+}
+
+function viewSuche(q) {
+  const begriff = (q || '').trim();
+  const treffer = !begriff ? [] : ARTIKEL.filter(sichtbar).map(a => {
+    const t = textOf(a);
+    const hay = (a.titel + ' ' + a.lead + ' ' + t).toLowerCase();
+    const pos = hay.indexOf(begriff.toLowerCase());
+    if (pos === -1) return null;
+    const von = Math.max(0, t.toLowerCase().indexOf(begriff.toLowerCase()) - 70);
+    const aus = t.slice(von, von + 220);
+    return { a, aus: (von > 0 ? '… ' : '') + aus + ' …' };
+  }).filter(Boolean);
+
+  const liste = treffer.map(({ a, aus }) => {
+    const k = katById(a.kat);
+    const re = new RegExp('(' + begriff.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'ig');
+    return `<a class="result" href="#/artikel/${a.id}">
+      <div class="r-path">Wissen / ${esc(k.titel)}${a.intern ? ' · intern' : ''}</div>
+      <div class="r-title">${esc(a.titel).replace(re, '<mark>$1</mark>')}</div>
+      <p class="r-text">${esc(aus).replace(re, '<mark>$1</mark>')}</p>
+    </a>`;
+  }).join('');
+
+  return `<div class="wrap"><div class="search-results">
+    <h1>Suche</h1>
+    <p class="count">${begriff ? `${treffer.length} Treffer für „${esc(begriff)}"` : 'Bitte geben Sie einen Suchbegriff ein.'}${!state.user && begriff ? ' · Interne Artikel sind ohne Anmeldung nicht enthalten.' : ''}</p>
+    ${liste || (begriff ? '<p>Nichts gefunden. Versuchen Sie einen kürzeren Begriff.</p>' : '')}
+  </div></div>`;
+}
+
+function viewPlatzhalter(titel, text) {
+  return `<div class="wrap"><div class="kat-head">
+    <div class="breadcrumb"><a href="#/">Wissen</a><span>/</span><span>${esc(titel)}</span></div>
+    <h1>${esc(titel)}</h1>
+    <p>${esc(text)}</p>
+    <p style="margin-top:22px"><a class="btn btn-ghost" href="#/">Zurück zum Wissen</a></p>
+  </div></div>`;
+}
+
+function viewNotFound() {
+  return viewPlatzhalter('Seite nicht gefunden', 'Diese Adresse gibt es in der Vorschau nicht.');
+}
+
+/* =========================================================================
+   Router
+   ========================================================================= */
+function render() {
+  const hash = location.hash.replace(/^#/, '') || '/';
+  const [pfad, query] = hash.split('?');
+  const teile = pfad.split('/').filter(Boolean);
+  const app = document.getElementById('app');
+  let html;
+
+  if (teile.length === 0) html = viewHome();
+  else if (teile[0] === 'kat') html = viewKategorie(teile[1]);
+  else if (teile[0] === 'artikel') html = viewArtikel(teile[1]);
+  else if (teile[0] === 'portal') html = viewPortal();
+  else if (teile[0] === 'suche') html = viewSuche(new URLSearchParams(query || '').get('q'));
+  else if (teile[0] === 'news') html = viewPlatzhalter('News', 'Der News-Bereich bleibt wie bisher auf der Website. In der Vorschau ist er nicht nachgebaut. Die Meldungen finden Sie dauerhaft unter Allgemeine Informationen.');
+  else if (teile[0] === 'ueber-uns') html = viewPlatzhalter('Über uns', 'Diese Seite gehört zur bestehenden Website und ist in der Vorschau nicht nachgebaut.');
+  else if (teile[0] === 'silverback-one') html = viewPlatzhalter('Silverback ONE', 'Diese Seite gehört zur bestehenden Website und ist in der Vorschau nicht nachgebaut.');
+  else html = viewNotFound();
+
+  app.innerHTML = html;
+  window.scrollTo(0, 0);
+  markNav(teile);
+  bind();
+}
+
+function markNav(teile) {
+  const wissenAktiv = teile.length === 0 || ['kat', 'artikel', 'suche'].includes(teile[0]);
+  document.querySelectorAll('#mainnav a').forEach(a => {
+    a.classList.toggle('is-active', a.dataset.nav === 'wissen' && wissenAktiv);
+  });
+  const pb = document.getElementById('portalbtn');
+  pb.innerHTML = state.user
+    ? '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6 8-6s8 2 8 6"/></svg> Mein Portal'
+    : '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg> Portal';
+}
+
+function bind() {
+  const form = document.getElementById('loginform');
+  if (form) {
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      const mail = document.getElementById('mail').value.trim().toLowerCase();
+      const pw = document.getElementById('pw').value;
+      const err = document.getElementById('loginerror');
+      if (!mail.endsWith('@silverbackgmbh.de')) {
+        err.textContent = 'Bitte melden Sie sich mit Ihrer Adresse auf silverbackgmbh.de an.';
+        err.classList.add('show');
+        return;
+      }
+      if (!pw) {
+        err.textContent = 'Bitte geben Sie ein Passwort ein.';
+        err.classList.add('show');
+        return;
+      }
+      login(mail);
+      location.hash = '#/portal';
+      render();
+    });
+  }
+
+  const lo = document.getElementById('logoutbtn');
+  if (lo) lo.addEventListener('click', () => { logout(); location.hash = '#/'; render(); });
+
+  const hs = document.getElementById('herosearch');
+  if (hs) hs.addEventListener('submit', e => {
+    e.preventDefault();
+    const q = hs.querySelector('input').value.trim();
+    if (q) location.hash = '#/suche?q=' + encodeURIComponent(q);
+  });
+}
+
+document.getElementById('headersearch').addEventListener('submit', e => {
+  e.preventDefault();
+  const q = e.target.querySelector('input').value.trim();
+  if (q) location.hash = '#/suche?q=' + encodeURIComponent(q);
+});
+
+document.getElementById('themebtn').addEventListener('click', () => {
+  setTheme(state.theme === 'dark' ? 'light' : 'dark');
+});
+
+document.addEventListener('keydown', e => {
+  if (e.key === '/' && !['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) {
+    e.preventDefault();
+    const i = document.querySelector('#headersearch input');
+    if (i) i.focus();
+  }
+});
+
+window.addEventListener('hashchange', render);
+render();
+</script>
+</body>
+</html>
